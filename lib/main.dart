@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   runApp(MyApp());
@@ -69,29 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This menu button widget updates a _selection field (of type WhyFarther,
-    // not shown here).
-    PopupMenuButton pmb = PopupMenuButton<WhyFarther>(
-      onSelected: (WhyFarther result) { setState(() { _selection = result; }); },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
-      const PopupMenuItem<WhyFarther>(
-        value: WhyFarther.harder,
-        child: Text('Working a lot harder'),
-      ),
-      const PopupMenuItem<WhyFarther>(
-        value: WhyFarther.smarter,
-        child: Text('Being a lot smarter'),
-      ),
-      PopupMenuItem<WhyFarther>(
-        value: WhyFarther.selfStarter,
-        child: Image.network("https://i.ytimg.com/vi/M4wCKuTdcnk/maxresdefault.jpg"),
-      ),
-      const PopupMenuItem<WhyFarther>(
-        value: WhyFarther.tradingCharter,
-        child: Text('Placed in charge of trading charter'),
-      ),
-    ],
-    );
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -125,7 +103,26 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            pmb
+        CupertinoActionSheet(
+          title: Text("Cupertino Action Sheet"),
+          message: Text("Select any action "),
+          actions: <Widget>[
+          CupertinoActionSheetAction(
+            child: Text("Action 1"),
+            isDefaultAction: true,
+            onPressed: () {
+              print("Action 1 is been clicked");
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: Text("Action 2"),
+            isDestructiveAction: true,
+            onPressed: () {
+              print("Action 2 is been clicked");
+            },
+          )
+        ],
+      )
 
           ],
         ),
