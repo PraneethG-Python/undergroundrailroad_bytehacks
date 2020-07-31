@@ -50,26 +50,12 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// This is the type used by the popup menu below.
-enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
-
 class _MyHomePageState extends State<MyHomePage> {
-  WhyFarther _selection;
-
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-
-    });
-  }
+  String contactInfo = "Contact Info\nPhone Number: (546) 824-1924";
 
   @override
   Widget build(BuildContext context) {
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -103,35 +89,55 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-        CupertinoActionSheet(
-          title: Text("Cupertino Action Sheet"),
-          message: Text("Select any action "),
-          actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text("Action 1"),
-            isDefaultAction: true,
-            onPressed: () {
-              print("Action 1 is been clicked");
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text("Action 2"),
-            isDestructiveAction: true,
-            onPressed: () {
-              print("Action 2 is been clicked");
-            },
+          CupertinoActionSheet(
+            title: Text("Safehouse 1"),
+            message: Text("Select any action "),
+            actions: <Widget>[
+              CupertinoActionSheetAction(
+                child: Text(contactInfo),
+                onPressed: () {
+                  // Rerenders this widget so that the change can be seen and not only the variable is changing
+                  setState(() {
+                    contactInfo = contactInfo.contains("\n") ? "Contact Info" : "Contact Info\nPhone Number: (546) 824-1924";
+                  });
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: Text("Housing Capacity: 13"),
+                onPressed: () {},
+              ),
+              SnackBarPage()
+            ],
           )
         ],
-      )
-
-          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class SnackBarPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: RaisedButton(
+        onPressed: () {
+          final snackBar = SnackBar(
+            content: Text('Calculating route...'),
+//            action: SnackBarAction(
+//              label: 'Undo',
+//              onPressed: () {
+//                // Some code to undo the change.
+//              },
+//            ),
+          );
+
+          // Find the Scaffold in the widget tree and use
+          // it to show a SnackBar.
+          Scaffold.of(context).showSnackBar(snackBar);
+        },
+        child: Text('Show SnackBar'),
+      ),
     );
   }
 }
