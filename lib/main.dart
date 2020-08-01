@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:NorthStar/safehouse.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String contactInfo = "Contact Info\nPhone Number: (546) 824-1924";
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,26 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-          CupertinoActionSheet(
-            title: Text("Safehouse 1"),
-            message: Text("Select any action "),
-            actions: <Widget>[
-              CupertinoActionSheetAction(
-                child: Text(contactInfo),
-                onPressed: () {
-                  // Rerenders this widget so that the change can be seen and not only the variable is changing
-                  setState(() {
-                    contactInfo = contactInfo.contains("\n") ? "Contact Info" : "Contact Info\nPhone Number: (546) 824-1924";
-                  });
-                },
-              ),
-              CupertinoActionSheetAction(
-                child: Text("Housing Capacity: 13"),
-                onPressed: () {},
-              ),
-              SnackBarPage()
-            ],
-          )
+            MySafehouse(),
+            MySafehouse()
         ],
         ),
       ),
@@ -116,28 +99,4 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class SnackBarPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        onPressed: () {
-          final snackBar = SnackBar(
-            content: Text('Calculating route...'),
-//            action: SnackBarAction(
-//              label: 'Undo',
-//              onPressed: () {
-//                // Some code to undo the change.
-//              },
-//            ),
-          );
 
-          // Find the Scaffold in the widget tree and use
-          // it to show a SnackBar.
-          Scaffold.of(context).showSnackBar(snackBar);
-        },
-        child: Text('Show SnackBar'),
-      ),
-    );
-  }
-}
