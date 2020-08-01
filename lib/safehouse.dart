@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MySafehouse extends StatefulWidget {
   MySafehouse({Key key, this.title}) : super(key: key);
@@ -22,56 +24,235 @@ class MySafehouse extends StatefulWidget {
 class SafehouseState extends State<MySafehouse> {
   String contactInfo = "Contact Info";
 
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double screenHeight(BuildContext context, {double dividedBy = 1}) {
+    return screenSize(context).height / dividedBy;
+  }
+
+  double screenWidth(BuildContext context, {double dividedBy = 1}) {
+    return screenSize(context).width / dividedBy;
+  }
+
+  SolidController _controller = SolidController();
+
   Widget build(BuildContext context) {
-    return CupertinoActionSheet(
-      title: Text("Safehouse 0"),
-      message: Text("Select any action "),
-      actions: <Widget>[
-        CupertinoActionSheetAction(
-          child: Text(contactInfo),
-          onPressed: () {
-            // Rerenders this widget so that the change can be seen and not only the variable is changing
-            setState(() {
-              if (contactInfo.contains("\n")) {
-                contactInfo = "Contact Info";
-              } else {
-                contactInfo = "Contact Info\nPhone Number: (546) 824-1924\nAddress: 2923 Garlen Ave";
-              }
-            });
-          },
+    // minHeight: screenHeight(context, dividedBy: 3.1),
+    // maxHeight: screenHeight(context, dividedBy: 1.5),
+    return ListView(
+      padding: const EdgeInsets.all(4),
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0),
+          height: 200.0,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              for (int i = 0; i < 5; i++)
+                Card(
+                  semanticContainer: true,
+                  clipBehavior: Clip.antiAlias,
+                  child: Image.network(
+                    'https://placeimg.com/640/480/any',
+                    fit: BoxFit.fill,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 5,
+                  margin: EdgeInsets.all(10),
+                ),
+            ],
+          ),
         ),
-        CupertinoActionSheetAction(
-          child: Text("Housing Capacity: 13/30"),
-          onPressed: () {},
+        Card(
+          shadowColor: Colors.black,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.access_time,
+                  color: Colors.black,
+                ),
+                title: Text('Expected Visitors'),
+                trailing: Text(
+                  'None',
+                  style: TextStyle(fontSize: 16, color: Colors.grey[500]),
+                ),
+                onTap: () {
+                  return false;
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.airline_seat_individual_suite,
+                  color: Colors.black,
+                ),
+                title: Text('Maximum Capacity'),
+                trailing: Text(
+                  'None',
+                  style: TextStyle(fontSize: 16, color: Colors.grey[500]),
+                ),
+                onTap: () {
+                  return false;
+                },
+              ),
+            ],
+          ),
         ),
-        SnackBarPage()
+        Card(
+          shadowColor: Colors.white,
+          color: Colors.black,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.navigation,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'Get Directions',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  //Add Function
+                  print(_controller.isOpened);
+                  _controller.show();
+                  print("Yup");
+                },
+              ),
+            ],
+          ),
+        ),
+        Card(
+          shadowColor: Colors.black,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(
+                  Icons.message,
+                  color: Colors.black,
+                ),
+                title: Text('SMS Owner'),
+                subtitle: Text('Safehouse Owner'),
+                onTap: () {
+                  launch("sms:PHONE_NUMBER");
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.phone,
+                  color: Colors.black,
+                ),
+                title: Text('Call'),
+                subtitle: Text('Safehouse Owner'),
+                onTap: () {
+                  launch("tel:PHONE_NUMBER");
+                },
+              ),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.all(5),
+                child: OutlineButton(
+                  child: const Text('Reserve'),
+                  textColor: Colors.black,
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    //Add Function
+                  },
+                  padding: EdgeInsets.all(15),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.all(5),
+                child: RaisedButton(
+                    child: const Text('Compromised'),
+                    textColor: Colors.white,
+                    color: Colors.black,
+                    padding: EdgeInsets.all(15),
+                    onPressed: () async {
+                      switch (await showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SimpleDialog(
+                              title: const Text(
+                                'Decalaring Compromised',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.black,
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(
+                                    'This will declare this safehouse: Compromised',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                ButtonBar(
+                                  alignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    OutlineButton(
+                                      textColor: Colors.white,
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context, "No");
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    RaisedButton(
+                                      textColor: Colors.black,
+                                      color: Colors.white,
+                                      onPressed: () {
+                                        Navigator.pop(context, "Yes");
+                                      },
+                                      child: const Text('Okay'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          })) {
+                        case "Yes":
+                          //Add Function
+                          break;
+                        case "No":
+                          //Add Function
+                          break;
+                      }
+                    }),
+              ),
+            ),
+          ],
+        ),
       ],
     );
-  }
-}
 
-class SnackBarPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        onPressed: () {
-          final snackBar = SnackBar(
-            content: Text('Activating GPS...'),
-//            action: SnackBarAction(
-//              label: 'Undo',
-//              onPressed: () {
-//                // Some code to undo the change.
-//              },
-//            ),
-          );
-
-          // Find the Scaffold in the widget tree and use
-          // it to show a SnackBar.
-          Scaffold.of(context).showSnackBar(snackBar);
-        },
-        child: Text('Calculate route'),
-      ),
-    );
+    // Container(
+    //       color: Colors.black,
+    //       height: 50,
+    //       child: Center(
+    //         child: Icon(
+    //           Icons.remove,
+    //           color: Colors.white,
+    //           size: 40,
+    //         ),
+    //       ),
+    //     ),
   }
 }
