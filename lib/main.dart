@@ -52,14 +52,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title)
       ),
-      body: Center(
-        child: ListView(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            MyMap()
-          ],
-        ),
-      ),
+      body: MyMap()
     );
   }
 }

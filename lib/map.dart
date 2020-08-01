@@ -118,7 +118,7 @@ class MapState extends State<MyMap> {
         onMapCreated: _onMapCreated,
         markers: _markers,
         initialCameraPosition: CameraPosition(
-          target: getCenter(),
+          target: LatLng(_position.latitude, _position.longitude),
           zoom: 5.0,
         ),
       );
