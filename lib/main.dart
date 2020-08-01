@@ -68,16 +68,20 @@ class _MyHomePageState extends State<MyHomePage> {
     // setCustomMapPin();
   }
 
-  getCurrentLatitude() async {
-    var position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    latitude = position.latitude;
+  getCurrentLatitude() {
+    double latPos = 0.0;
+    Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((Position position) => {
+      latPos = position.latitude
+    });
+    return latPos;
   }
 
   getCurrentLongitude() async {
-    var position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    longitude = position.longitude;
+    double lonPos = 0.0;
+    Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((Position position) => {
+      lonPos = position.longitude
+    });
+    return lonPos;
   }
 
   Size screenSize(BuildContext context) {
@@ -147,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Underground Railroad'),
+          title: Text('North Star'),
           backgroundColor: Colors.black,
         ),
         body: GoogleMap(
@@ -158,7 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
             zoom: 5.0,
           ),
         ),
-        // bottomSheet: MySafehouse(),
       ),
     );
   }
