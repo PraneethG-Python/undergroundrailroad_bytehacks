@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "511928460139",
+    "firebase_url": "https://undergroundrailroads.firebaseio.com",
+    "project_id": "undergroundrailroads",
+    "storage_bucket": "undergroundrailroads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511928460139:android:5e6ff39463ed83ca6ca22e",
+        "android_client_info": {
+          "package_name": "com.example.undergroundrailroadbytehacks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511928460139-b6rm20t5ft2qlkraq0ncvmuqc8vg7bfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-EqsrT83zpcl8pJ2kIAosC-9GijSP7tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511928460139-b6rm20t5ft2qlkraq0ncvmuqc8vg7bfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
